@@ -1,20 +1,17 @@
 package me.chuwy.otusfp
 
-import cats.{Applicative, Monad}
+import cats.Monad
 import cats.implicits._
 
 import cats.effect.IO
-import cats.data.{OptionT, ReaderT, State, StateT, EitherT}
+import cats.data.{EitherT, ReaderT, State, StateT}
 
 
 object Transformers {
+
   def getUsername: IO[Option[String]] = IO.pure(Some("Bob"))
   def getId(name: String): IO[Option[Int]] = IO.pure(Some(42))
   def getPermissions(id: Int): IO[Option[String]] = IO.pure(None)
-
-
-  type Reader[E, A] = E => A
-
 
   case class RealWorld(events: List[String]) {
     def addEvent(event: String): RealWorld =
@@ -45,15 +42,13 @@ object Transformers {
     _ <- liftState[Life, RealWorld, Unit](learnCode)
   } yield ()
 
-  val action: IO[Int] = ???
-
-  val a: EitherT[IO, Catastrophe, Int] = EitherT.liftF(action)
+  def action: IO[Int] = ???
 
   type Env = String
-  val readerTexample: ReaderT[IO, Env, Int] = ???
-  val readerTexample1: ReaderT[IO, Env, Int] = ???
-  val readerTexample2: ReaderT[IO, Env, Int] = ???
-  val readerTexample3: ReaderT[IO, Env, Int] = ???
+  def readerTexample: ReaderT[IO, Env, Int] = ???
+  def readerTexample1: ReaderT[IO, Env, Int] = ???
+  def readerTexample2: ReaderT[IO, Env, Int] = ???
+  def readerTexample3: ReaderT[IO, Env, Int] = ???
 
   val result = for {
     a <- readerTexample1
