@@ -23,12 +23,14 @@ object Dependencies {
     "io.circe"                   %% "circe-core"           % V.circe,
     "io.circe"                   %% "circe-parser"         % V.circe,
     "io.circe"                   %% "circe-generic"        % V.circe,
+    "io.circe"                   %% "circe-literal"        % V.circe,
 
     "org.typelevel"              %% "cats-effect"          % V.catsEffect,
 
     "co.fs2"                     %% "fs2-io"               % V.fs2,
 
     "org.http4s"                 %% "http4s-dsl"           % V.http4sVersion,
+    "org.http4s"                 %% "http4s-circe"         % V.http4sVersion,
     "org.http4s"                 %% "http4s-blaze-server"  % V.http4sVersion,
     "org.http4s"                 %% "http4s-blaze-client"  % V.http4sVersion,
 

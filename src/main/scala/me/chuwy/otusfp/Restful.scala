@@ -62,17 +62,8 @@ object Restful {
         }
     }
 
-  object User {
-    def unapply(s: String): Option[User] =
-      if (s == "bob") Some(User("bob"))
-      else None
-
-  }
-
   def authRoutes(db: Database[IO]): AuthedRoutes[User, IO] =
     AuthedRoutes.of {
-      case GET -> Root / "types" / User(bob) as _ =>
-        Ok(s"IntVar with $bob")
       case GET -> Root / "hello" / path as user =>
         if (user.name != "anon") Ok(s"hello, ${user.name} from $path")
         else Forbidden("You're anonymous")
@@ -136,6 +127,9 @@ object Restful {
 
   def buildAuthMiddleware(db: Database[IO]): AuthMiddleware[IO, User] =
     AuthMiddleware(authUser(db))
+
+  def buildRoutes(db: Database[IO]): HttpRoutes[IO] =
+    buildAuthMiddleware(db)(authRoutes(db))
 
   def router(db: Database[IO]) = Router("/" -> buildAuthMiddleware(db)(authRoutes(db)))
 
